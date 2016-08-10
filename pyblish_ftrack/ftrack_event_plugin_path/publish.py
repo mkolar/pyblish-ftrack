@@ -152,11 +152,6 @@ class ApplicationStore(ftrack_connect.application.ApplicationStore):
 
 def register(registry, **kw):
     '''Register action. Called when used as an event plugin.'''
-
-    if registry is not ftrack.EVENT_HANDLERS:
-        # Exit to avoid registering this plugin again.
-        return
-
     logging.basicConfig(level=logging.INFO)
     action = Publish()
     action.register()
