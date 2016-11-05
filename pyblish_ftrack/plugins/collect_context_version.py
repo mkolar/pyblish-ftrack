@@ -9,13 +9,13 @@ import pyblish.api
 
 
 @pyblish.api.log
-class SelectContextVersion(pyblish.api.Selector):
+class CollectContextVersion(pyblish.api.ContextPlugin):
     """Finds version in the filename or passes the one found in the context
         Arguments:
         version (int, optional): version number of the publish
     """
 
-    order = pyblish.api.Selector.order + 0.1
+    order = pyblish.api.CollectorOrder + 0.1
     hosts = ['*']
 
     def process(self, context):

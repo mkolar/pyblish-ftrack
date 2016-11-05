@@ -3,12 +3,12 @@ import ftrack
 
 
 @pyblish.api.log
-class ConformFtrack(pyblish.api.Conformer):
+class IntegrateFtrack(pyblish.api.InstancePlugin):
 
-    """ Creating Componenets in Ftrack.
+    """ Creating Components in Ftrack.
     """
 
-    order = pyblish.api.Conformer.order + 0.11
+    order = pyblish.api.IntegratorOrder + 0.11
     label = 'Ftrack'
     optional = True
 

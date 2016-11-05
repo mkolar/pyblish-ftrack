@@ -7,12 +7,12 @@ import pyblish.api
 
 
 @pyblish.api.log
-class CollectFtrackData(pyblish.api.Selector):
+class CollectFtrackData(pyblish.api.ContextPlugin):
 
     """Collects ftrack data from FTRACK_CONNECT_EVENT
     """
 
-    order = pyblish.api.Selector.order
+    order = pyblish.api.CollectorOrder
     hosts = ['*']
 
     def process(self, context):
