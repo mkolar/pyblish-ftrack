@@ -48,18 +48,6 @@ class CollectFtrackData(pyblish.api.Selector):
 
     def get_data(self, entity):
 
-        task_codes = {
-            'Animation': 'anim',
-            'Layout': 'layout',
-            'FX': 'fx',
-            'Compositing': 'comp',
-            'Motion Graphics': 'mograph',
-            'Lighting': 'light',
-            'Modeling': 'geo',
-            'Rigging': 'rig',
-            'Art': 'art',
-            }
-
         entityName = entity.getName()
         entityId = entity.getId()
         entityType = entity.getObjectType()
@@ -75,7 +63,6 @@ class CollectFtrackData(pyblish.api.Selector):
                 'type': taskType,
                 'name': entityName,
                 'id': entityId,
-                'code': task_codes.get(taskType, None),
                 'description': entityDescription
             }
         elif entity.get('entityType') == 'task':
