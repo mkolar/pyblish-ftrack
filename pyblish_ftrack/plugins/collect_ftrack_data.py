@@ -14,7 +14,6 @@ class CollectFtrackData(pyblish.api.Selector):
 
     order = pyblish.api.Selector.order
     hosts = ['*']
-    version = (0, 1, 0)
 
     def process(self, context):
 

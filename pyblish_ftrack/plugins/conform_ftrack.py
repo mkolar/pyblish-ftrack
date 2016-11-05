@@ -15,17 +15,17 @@ class ConformFtrack(pyblish.api.Conformer):
     def process(self, instance):
 
         # skipping instance if ftrackData isn't present
-        if not instance.context.has_data('ftrackData'):
+        if not instance.context.data.get('ftrackData'):
             self.log.info('No ftrackData present. Skipping this instance')
             return
 
         # skipping instance if ftrackComponents isn't present
-        if not instance.has_data('ftrackComponents'):
+        if not instance.data.get('ftrackComponents'):
             self.log.info('No ftrackComponents present.\
                            Skipping this instance')
             return
 
-        asset_version = instance.data('ftrackAssetVersion')
+        asset_version = instance.data['ftrackAssetVersion']
         version = ftrack.AssetVersion(asset_version['id'])
 
         # creating comment
@@ -34,8 +34,8 @@ class ConformFtrack(pyblish.api.Conformer):
             version.set('comment', value=comment)
 
         # creating components
-        components = instance.data('ftrackComponents')
-        for component_name in instance.data('ftrackComponents'):
+        components = instance.data['ftrackComponents']
+        for component_name in instance.data['ftrackComponents']:
 
             # creating component
             try:

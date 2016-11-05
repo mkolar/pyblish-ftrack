@@ -13,32 +13,32 @@ class ExtractFtrack(pyblish.api.Extractor):
     def process(self, instance, context):
 
         # skipping instance if ftrackData isn't present
-        if not context.has_data('ftrackData'):
+        if not context.data.get('ftrackData'):
             self.log.info('No ftrackData present. Skipping this instance')
             return
 
         # skipping instance if ftrackComponents isn't present
-        if not instance.has_data('ftrackComponents'):
+        if not instance.data.get('ftrackComponents'):
             self.log.info('No ftrackComponents found. Skipping this instance')
             return
 
-        ftrack_data = context.data('ftrackData').copy()
+        ftrack_data = context.data['ftrackData'].copy()
         task = ftrack.Task(ftrack_data['Task']['id'])
         parent = task.getParent()
         asset_data = None
         create_version = False
 
         # creating asset
-        if instance.data('ftrackAssetCreate'):
+        if instance.data['ftrackAssetCreate']:
             asset = None
 
             # creating asset from ftrackAssetName
-            if instance.has_data('ftrackAssetName'):
+            if instance.data.get('ftrackAssetName'):
 
-                asset_name = instance.data('ftrackAssetName')
+                asset_name = instance.data['ftrackAssetName']
 
-                if instance.has_data('ftrackAssetType'):
-                    asset_type = instance.data('ftrackAssetType')
+                if instance.data.get('ftrackAssetType'):
+                    asset_type = instance.data['ftrackAssetType']
                 else:
                     asset_type = ftrack_data['Task']['code']
 
@@ -64,16 +64,16 @@ class ExtractFtrack(pyblish.api.Extractor):
                           'name': asset.getName()}
 
         if not asset_data:
-            asset_data = instance.data('ftrackAsset')
+            asset_data = instance.data['ftrackAsset']
 
-        instance.set_data('ftrackAsset', value=asset_data)
+        instance.data['ftrackAsset'] = asset_data
 
         # creating version
         version = None
-        if instance.data('ftrackAssetVersionCreate') or create_version:
+        if instance.data['ftrackAssetVersionCreate'] or create_version:
             asset = ftrack.Asset(asset_data['id'])
             taskid = ftrack_data['Task']['id']
-            version_number = int(context.data('version'))
+            version_number = int(context.data['version'])
 
             version = self.GetVersionByNumber(asset, version_number)
 
@@ -87,15 +87,15 @@ class ExtractFtrack(pyblish.api.Extractor):
                 self.log.info(msg)
 
             asset_version = {'id': version.getId(), 'number': version_number}
-            instance.set_data('ftrackAssetVersion', value=asset_version)
+            instance.data['ftrackAssetVersion'] = asset_version
             version.publish()
         else:
             # using existing version
-            asset_version = instance.data('ftrackAssetVersion')
+            asset_version = instance.data['ftrackAssetVersion']
             version = ftrack.AssetVersion(asset_version['id'])
 
         # adding asset version to ftrack data
-        instance.set_data('ftrackAssetVersion', value=asset_version)
+        instance.data['ftrackAssetVersion'] = asset_version
 
     def GetVersionByNumber(self, asset, number):
         for version in asset.getVersions():
