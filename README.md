@@ -21,7 +21,7 @@ ftrackComponents = {
                     'movie':    {path: 'path/to/file.mp4', reviewable = True},
                     }
 
-instance.set_data('ftrackComponents', value=ftrackComponents)
+instance.data['ftrackComponents'] = ftrackComponents
 ```
 
 **Optional data:**
@@ -30,14 +30,21 @@ instance.set_data('ftrackComponents', value=ftrackComponents)
  - I you set this data, extensionwill try to find an existing ftrack asset with given name and attach the version to it. If such asset is not found, a new one will be created.
 ```python
 # Example code to set ftrackAssetName data
-context.set_data('ftrackAssetName', value='myAsset')
+context.data['ftrackAssetName'] = 'myAsset'
 ```
 
 - version - Version number of the publish (Context data)
  - ftrack extension needs to know a version number the publish taking place so it can set ftrack version to the same number. If you set version yourself, it will be pick up by plugins and used. If not, extension will try to get the version number from currentFile context.
 ```python
 # Example code to set ftrackAssetName data
-context.set_data('version', value=2)
+context.data['version'] = 2
+```
+
+- comment - Version description (Context data)
+ - If extension find 'comment' data in the context, it will be written into a 'description' field of the created AssetVersion.
+```python
+# Example code to set ftrackAssetName data
+context.data['comment'] = 'comment about the version being published'
 ```
 
 **Publish from Ftrack**
