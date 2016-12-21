@@ -21,7 +21,7 @@ class CollectContextVersion(pyblish.api.ContextPlugin):
     def process(self, context):
 
         # Get version number
-        if not context.data.get('version'):
+        if 'version' not in context.data:
             directory, filename = os.path.split(context.data['currentFile'])
             try:
                 prefix, version = self.version_get(filename, 'v')

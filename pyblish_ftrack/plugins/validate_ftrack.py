@@ -15,12 +15,12 @@ class ValidateFtrack(pyblish.api.InstancePlugin):
     def process(self, instance):
 
         # skipping instance if ftrackData isn't present
-        if not instance.context.data.get('ftrackData'):
+        if 'ftrackData' not in instance.context.data:
             self.log.info('No ftrackData present. Skipping this instance')
             return
 
         # skipping instance if ftrackComponents isn't present
-        if not instance.data.get('ftrackComponents'):
+        if 'ftrackComponents' not in instance.data:
             self.log.info('No ftrackComponents present\
                            Skipping this instance')
             return
@@ -42,7 +42,7 @@ class ValidateFtrack(pyblish.api.InstancePlugin):
             instance.data['ftrackAssetCreate'] = True
             return
 
-        if instance.data.get('ftrackAssetName'):
+        if 'ftrackAssetName' in instance.data:
 
             # searching for existing asset
             asset_name = instance.data['ftrackAssetName']

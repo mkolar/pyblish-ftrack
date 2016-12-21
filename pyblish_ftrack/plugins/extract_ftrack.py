@@ -14,13 +14,14 @@ class ExtractFtrack(pyblish.api.InstancePlugin):
     def process(self, instance):
 
         # skipping instance if ftrackData isn't present
-        if not instance.context.data.get('ftrackData'):
+        if 'ftrackData' not in instance.context.data:
             self.log.info('No ftrackData present. Skipping this instance')
             return
 
         # skipping instance if ftrackComponents isn't present
-        if not instance.data.get('ftrackComponents'):
-            self.log.info('No ftrackComponents found. Skipping this instance')
+        if 'ftrackComponents' not in instance.data:
+            self.log.info('No ftrackComponents present\
+                           Skipping this instance')
             return
 
         ftrack_data = instance.context.data['ftrackData'].copy()
@@ -34,11 +35,11 @@ class ExtractFtrack(pyblish.api.InstancePlugin):
             asset = None
 
             # creating asset from ftrackAssetName
-            if instance.data.get('ftrackAssetName'):
+            if 'ftrackAssetName' in instance.data:
 
                 asset_name = instance.data['ftrackAssetName']
 
-                if instance.data.get('ftrackAssetType'):
+                if 'ftrackAssetType' in instance.data:
                     asset_type = instance.data['ftrackAssetType']
                 else:
                     asset_type = ftrack_data['Task']['name']

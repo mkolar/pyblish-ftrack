@@ -15,13 +15,13 @@ class IntegrateFtrack(pyblish.api.InstancePlugin):
     def process(self, instance):
 
         # skipping instance if ftrackData isn't present
-        if not instance.context.data.get('ftrackData'):
+        if 'ftrackData' not in instance.context.data:
             self.log.info('No ftrackData present. Skipping this instance')
             return
 
         # skipping instance if ftrackComponents isn't present
-        if not instance.data.get('ftrackComponents'):
-            self.log.info('No ftrackComponents present.\
+        if 'ftrackComponents' not in instance.data:
+            self.log.info('No ftrackComponents present\
                            Skipping this instance')
             return
 
